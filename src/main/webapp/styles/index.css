@@ -6,6 +6,9 @@ body{
   padding:0;
   box-sizing:border-box;
   font-family:"Poppins";
+  background-image: url("/DiceGameJEE2/assets/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 /*Navbar styles*/
 .topnav {

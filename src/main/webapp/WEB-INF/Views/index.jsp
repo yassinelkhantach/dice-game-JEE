@@ -33,7 +33,7 @@
 		
 		<form action="game" method="post">
 		    <label for="diceNumber">Dice number</label>
-		    <input type="number" id="diceNumber" name="diceNumber" min="1" max="3" placeholder="Write a number..." value="1">
+		    <input type="number" id="diceNumber" name="diceNumber" min="1" max="3" placeholder="Write a number..." value="1" autofocus>
 		    <input type="hidden" name="game">
 		    
 		    <input type="submit" value="Roll the Dice">

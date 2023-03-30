@@ -47,7 +47,7 @@
 	  	</div>
 	  	
 	  	<div class="restart">
-	  		<a href="<%=request.getContextPath()%>/game">Restart</a>
+	  		<a href="<%=request.getContextPath()%>/game" autofocus>Restart</a>
 	  	</div>
 	  	  	
   	</section>

@@ -45,6 +45,10 @@
 	  		}
 	  		%>
 	  	</div>
+	  	
+	  	<div class="restart">
+	  		<a href="<%=request.getContextPath()%>/game">Restart</a>
+	  	</div>
 	  	  	
   	</section>
 </body>

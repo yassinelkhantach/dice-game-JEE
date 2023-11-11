@@ -6,7 +6,7 @@ public class User {
 	private String lastName;
 	private String login;
 	private String password;
-	private int bestScore;
+	private int bestScore = 0;
 	
 	public int getUid() {
 		return uid;

@@ -2,8 +2,13 @@ package Controllers;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
+import org.apache.deltaspike.core.api.config.ConfigProperty;
+
 import Entities.User;
 import Repositories.UserDaoMysql;
+import Services.UserService;
 import Services.UserServiceImp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,14 +21,13 @@ import jakarta.servlet.http.HttpServletResponse;
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private UserServiceImp service;
+	private UserService service;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		this.service = new UserServiceImp(new UserDaoMysql());
 	}
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

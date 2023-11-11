@@ -1,6 +1,9 @@
 package Services;
 
 import java.util.List;
+import javax.inject.Inject;
+
+import org.apache.deltaspike.core.api.config.ConfigProperty;
 
 import Entities.User;
 import Repositories.UserDao;
@@ -11,7 +14,7 @@ public class UserServiceImp implements UserService {
 	
 	public UserServiceImp(UserDao dao) {
 		this.dao = dao;
-	} 
+	}
 	
 	
 	@Override

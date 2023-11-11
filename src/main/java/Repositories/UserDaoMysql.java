@@ -1,3 +1,4 @@
+
 package Repositories;
 
 import java.sql.Connection;
@@ -13,14 +14,11 @@ import Entities.User;
 public class UserDaoMysql implements UserDao {
 	
 	private Connection connection;
-	private static String host ="jdbc:mysql://localhost:3306/";
-	private static String database ="dice-game";
-	private static String username="root";
-	private static String password="";
+	private static String host ="jdbc:sqlserver://yassine.database.windows.net:1433;database=dice-game;user=yassine.elkhantach1@gmail.com@yassine;password=Natacha.2015;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
 	
 	public UserDaoMysql() {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,7 +31,7 @@ public class UserDaoMysql implements UserDao {
 		ResultSet rs = null;
 		PreparedStatement stmt;
 		try {
-			this.connection = DriverManager.getConnection(host+database,username,password);
+			this.connection = DriverManager.getConnection(host);
 			stmt = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
 			stmt.setInt(1, uid);
 			/*get results*/
@@ -63,7 +61,7 @@ public class UserDaoMysql implements UserDao {
 		ResultSet rs = null;
 		PreparedStatement stmt;
 		try {
-			this.connection = DriverManager.getConnection(host+database,username,password);
+			this.connection = DriverManager.getConnection(host);
 			stmt = connection.prepareStatement("SELECT * FROM users");
 			
 			/*get results*/
@@ -92,7 +90,7 @@ public class UserDaoMysql implements UserDao {
 	public User addUser(User user) {
 		PreparedStatement stmt;
 		try {
-			this.connection = DriverManager.getConnection(host+database,username,password);
+			this.connection = DriverManager.getConnection(host);
 			stmt = connection.prepareStatement("INSERT INTO users(firstName,lastName,login,password) VALUES (?,?,?,?)");
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
@@ -114,7 +112,7 @@ public class UserDaoMysql implements UserDao {
 	public User updateUser(User user) {
 		PreparedStatement stmt;
 		try {
-			this.connection = DriverManager.getConnection(host+database,username,password);
+			this.connection = DriverManager.getConnection(host);
 			stmt = connection.prepareStatement("UPDATE users SET firstName = ?, lastName = ?, login = ?, password = ?, bestScore = ? WHERE id = ?");
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
@@ -138,7 +136,7 @@ public class UserDaoMysql implements UserDao {
 		PreparedStatement stmt;
 		User user = this.getUserById(uid);
 		try {
-			this.connection = DriverManager.getConnection(host+database,username,password);
+			this.connection = DriverManager.getConnection(host);
 			stmt = connection.prepareStatement("DELETE FROM users WHERE id = ?");
 			stmt.setInt(1, uid);
 
@@ -160,7 +158,7 @@ public class UserDaoMysql implements UserDao {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		try {
-			this.connection = DriverManager.getConnection(host+database,username,password);
+			this.connection = DriverManager.getConnection(host);
 			stmt = connection.prepareStatement("SELECT * FROM users WHERE login = ? AND password = ?");
 			stmt.setString(1,login);
 			stmt.setString(2,pswd);

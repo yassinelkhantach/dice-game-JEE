@@ -1,3 +1,4 @@
+<%@page import="Entities.User"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map.Entry"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
@@ -33,7 +34,7 @@
 			<h2>Game Over</h2>
 						
 			<h3>Your current score is : <%=request.getSession().getAttribute("score") %></h3>
-			<h3>Your best score is : 38</h3>
+			<h3>Your best score is : <%=((User)request.getSession().getAttribute("loggedUser")).getBestScore()%></h3>
 		</div>
 		
 		<div class="dices">

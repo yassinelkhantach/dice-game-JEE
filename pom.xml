@@ -22,7 +22,27 @@
       <artifactId>mysql-connector-java</artifactId> 
       <version>8.0.28</version>
     </dependency>
-    
+
+       <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+       <dependency>
+           <groupId>com.microsoft.sqlserver</groupId>
+           <artifactId>mssql-jdbc</artifactId>
+           <version>12.4.1.jre11</version>
+       </dependency>
+
+
+       <dependency>
+    	<groupId>javax.inject</groupId>
+	    <artifactId>javax.inject</artifactId>
+	    <version>1</version>
+	</dependency>
+	
+	<dependency>
+    <groupId>org.apache.deltaspike.core</groupId>
+    <artifactId>deltaspike-core-api</artifactId>
+    <version>1.9.2</version>
+</dependency>
+
 	
   </dependencies>
 

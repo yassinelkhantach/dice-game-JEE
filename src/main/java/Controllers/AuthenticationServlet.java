@@ -3,8 +3,13 @@ package Controllers;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
+import org.apache.deltaspike.core.api.config.ConfigProperty;
+
 import Entities.User;
 import Repositories.UserDaoMysql;
+import Services.UserService;
 import Services.UserServiceImp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,8 +21,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/login")
 public class AuthenticationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private UserServiceImp service;
+
+	private UserService service;
 	
 	@Override
 	public void init() throws ServletException {
@@ -26,7 +31,6 @@ public class AuthenticationServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
 		if(request.getSession().getAttribute("isLogged") != null && 
 		Boolean.parseBoolean(request.getSession().getAttribute("isLogged").toString())) {
 			request.getSession().setAttribute("rounds", new HashMap<>());

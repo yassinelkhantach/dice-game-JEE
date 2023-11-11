@@ -5,8 +5,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.inject.Inject;
+
+import org.apache.deltaspike.core.api.config.ConfigProperty;
+
 import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
+import Entities.User;
+import Repositories.UserDao;
+import Repositories.UserDaoMysql;
+import Services.UserService;
+import Services.UserServiceImp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,7 +28,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/game")
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	private UserService service = new UserServiceImp(new UserDaoMysql());
+	
+	
 	private HashMap<Integer,String> dices = new HashMap<>(){{
 		put(1, "one");
 		put(2, "two");
@@ -68,12 +80,9 @@ public class GameServlet extends HttpServlet {
 			Integer round = Integer.parseInt(request.getParameter("diceNumber")); 
 			HashMap<Integer, Integer> rounds = getUserRoundsFromSession(request);
 			Integer randint = new Random().nextInt(6)+1;
-
-			System.out.println(randint);
 			
 			if(getUserRoundsFromSession(request) != null && getUserRoundsFromSession(request).size() <3 ) {
 				if(getUserRoundsFromSession(request).containsKey(round)) {
-				
 					request.getSession().setAttribute("score", -1);
 				}
 				
@@ -83,7 +92,6 @@ public class GameServlet extends HttpServlet {
 				if(getUserRoundsFromSession(request) != null && getUserRoundsFromSession(request).size() == 2) {
 					if((getUserRoundsFromSession(request).get(1) == Integer.valueOf(5) && getUserRoundsFromSession(request).get(2) == Integer.valueOf(6) ) || 
 						(getUserRoundsFromSession(request).get(1) == Integer.valueOf(2) && getUserRoundsFromSession(request).get(2) == Integer.valueOf(1) )) {
-						
 						request.getSession().setAttribute("score", 0);
 					}
 				}
@@ -91,21 +99,18 @@ public class GameServlet extends HttpServlet {
 				if(getUserRoundsFromSession(request) != null && getUserRoundsFromSession(request).size() == 3) {
 					if((getUserRoundsFromSession(request).get(1) > getUserRoundsFromSession(request).get(2)) && 
 						(getUserRoundsFromSession(request).get(2) > getUserRoundsFromSession(request).get(3))) {
-						System.out.println("Message 3");
 							request.getSession().setAttribute("score", multiplication(rounds));
+							request.getSession().setAttribute("loggedUser", saveBestScore(request));
 							
 					}else
 					if((getUserRoundsFromSession(request).get(1) < getUserRoundsFromSession(request).get(2)) && 
 						(getUserRoundsFromSession(request).get(2) < getUserRoundsFromSession(request).get(3))) {
 						request.getSession().setAttribute("score", sum(rounds));
+						request.getSession().setAttribute("loggedUser", saveBestScore(request));
 					}else {
 						request.getSession().setAttribute("score", 0);
-						
 					}
 				}
-
-			}else {
-				System.out.println(getUserRoundsFromSession(request));
 			}
 
 		}
@@ -131,5 +136,14 @@ public class GameServlet extends HttpServlet {
 		for(Integer round : rounds.values())
 			result *= round;
 		return result;
+	}
+	
+	public User saveBestScore(HttpServletRequest request) {
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser"); 
+		if(loggedUser.getBestScore() < ((Integer)request.getSession().getAttribute("score")).intValue()) {
+			loggedUser.setBestScore(((Integer)request.getSession().getAttribute("score")).intValue());
+			loggedUser = service.updateUser(loggedUser);
+		}
+		return loggedUser;
 	}
 }

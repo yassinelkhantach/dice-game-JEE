@@ -22,7 +22,7 @@ steps:
     goals: 'package'
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/dice-game-JEE/target/azure-functions/function-app-demo'
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/dice-game-JEE/target/azure-functions/function-app-demo'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'

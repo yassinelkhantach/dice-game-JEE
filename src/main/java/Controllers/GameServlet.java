@@ -31,7 +31,7 @@ public class GameServlet extends HttpServlet {
 	
 	private UserService service = new UserServiceImp(new UserDaoMysql());
 	
-	//qsmething here to test
+	//something here to test
 	private HashMap<Integer,String> dices = new HashMap<>(){{
 		put(1, "one");
 		put(2, "two");
